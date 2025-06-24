@@ -6,3 +6,7 @@
  */
 
 rootProject.name = 'gradle-tutorial'
+
+// NOTE: Add your sub-projects here
+include 'StreamJob'
+include 'DataSource'

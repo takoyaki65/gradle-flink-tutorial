@@ -1,0 +1,10 @@
+application {
+  mainClass = 'com.example.StreamJob'
+}
+
+dependencies {
+    // flink dependencies
+    implementation "org.apache.flink:flink-streaming-java:${rootProject.ext.flinkVersion}"
+    implementation "org.apache.flink:flink-clients:${rootProject.ext.flinkVersion}"
+    implementation "org.slf4j:slf4j-simple:${rootProject.ext.slf4jVersion}"
+}

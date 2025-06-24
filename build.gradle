@@ -1,28 +1,66 @@
 plugins {
     id 'java'
-    id 'application'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+// NOTE: This is a global configuration for all projects
+allprojects {
+    group = 'com.example'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
     }
 }
 
-application {
+// NOTE: This is a configuration for all subprojects
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'application'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+}
+
+// NOTE: This is a global configuration for all projects
+ext {
+    flinkVersion = '1.20.1'
+    slf4jVersion = '2.0.17'
+}
+
+task runDataSource(type: JavaExec) {
+    group = 'application'
+    description = 'DataSourceを引数付きで実行'
+    
+    dependsOn ':DataSource:build'
+    
+    classpath = project(':DataSource').sourceSets.main.runtimeClasspath
+    mainClass = 'com.example.DataSource'
+    
+    // NOTE: if you want to pass default arguments, uncomment the following line
+    // args = ['--config', 'config.properties']
+    
+    if (project.hasProperty('dataArgs')) {
+        args = dataArgs.split('\\s+')
+    }
+}
+
+task runStreamJob(type: JavaExec) {
+    group = 'application'
+    description = 'StreamJobを引数付きで実行'
+    
+    dependsOn ':StreamJob:build'
+    
+    classpath = project(':StreamJob').sourceSets.main.runtimeClasspath
     mainClass = 'com.example.StreamJob'
-}
-
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    // flink dependencies
-    implementation 'org.apache.flink:flink-streaming-java:1.20.1'
-    implementation 'org.apache.flink:flink-clients:1.20.1'
-    implementation 'org.slf4j:slf4j-simple:2.0.17'
+    
+    // NOTE: if you want to pass default arguments, uncomment the following line
+    // args = ['count', '5', '2']
+    
+    // NOTE: if you want to pass command line arguments, uncomment the following line
+    if (project.hasProperty('streamArgs')) {
+        args = streamArgs.split('\\s+')
+    }
 }

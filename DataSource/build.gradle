@@ -1,0 +1,7 @@
+application {
+  mainClass = 'com.example.Server'
+}
+
+dependencies {
+  // NOTE: Add your dependencies here
+}
