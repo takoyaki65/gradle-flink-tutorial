@@ -20,7 +20,7 @@ public class DataSource {
   }
 
   /**
-   * リソースファイルから株式データを読み込む
+   * read stock data from resource file
    */
   private void loadStockData() {
     try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("stock_data.txt");
@@ -32,52 +32,52 @@ public class DataSource {
       while ((line = reader.readLine()) != null) {
         if (isFirstLine && skipHeader) {
           isFirstLine = false;
-          continue; // ヘッダー行をスキップ
+          continue; // skip header line
         }
         stockData.add(line);
         isFirstLine = false;
       }
 
       if (stockData.isEmpty()) {
-        throw new RuntimeException("株式データファイルが空です");
+        throw new RuntimeException("stock data file is empty");
       }
 
-      System.out.println("株式データを読み込みました: " + stockData.size() + "行");
+      System.out.println("stock data loaded: " + stockData.size() + " lines");
 
     } catch (IOException e) {
-      throw new RuntimeException("株式データファイルの読み込みに失敗しました", e);
+      throw new RuntimeException("failed to read stock data file", e);
     }
   }
 
   /**
-   * 次の株式データ行を取得（無限ループ）
+   * get next stock data line (infinite loop)
    * 
-   * @return 株式データの行
+   * @return stock data line
    */
   public String getNextLine() {
     if (stockData.isEmpty()) {
-      throw new RuntimeException("株式データが利用できません");
+      throw new RuntimeException("stock data is not available");
     }
 
     String line = stockData.get(currentIndex);
-    currentIndex = (currentIndex + 1) % stockData.size(); // 無限ループ
+    currentIndex = (currentIndex + 1) % stockData.size(); // infinite loop
 
     return line;
   }
 
   /**
-   * 現在のインデックスを取得
+   * get current index
    * 
-   * @return 現在のインデックス
+   * @return current index
    */
   public int getCurrentIndex() {
     return currentIndex;
   }
 
   /**
-   * データの総行数を取得
+   * get total lines of data
    * 
-   * @return データの総行数
+   * @return total lines of data
    */
   public int getTotalLines() {
     return stockData.size();
