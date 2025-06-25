@@ -43,7 +43,7 @@ task runDataSource(type: JavaExec) {
     // args = ['--config', 'config.properties']
     
     if (project.hasProperty('dataArgs')) {
-        args = dataArgs.split('\\s+')
+        args = project.property('dataArgs').split()
     }
 }
 
@@ -61,6 +61,6 @@ task runStreamJob(type: JavaExec) {
     
     // NOTE: if you want to pass command line arguments, uncomment the following line
     if (project.hasProperty('streamArgs')) {
-        args = streamArgs.split('\\s+')
+        args = project.property('streamArgs').split()
     }
 }
