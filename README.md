@@ -369,3 +369,14 @@ task runApp(type: JavaExec) {
 ```bash
 ./gradlew :app:runApp -PappArgs="arg1 arg2"
 ```
+
+## `build.gradle`や`settings.gradle`のsemantic editor機能について
+Gradleのビルドファイルを編集する際、コード補完やエラーの表示、semantic highlighting等の
+機能があることが望ましい。しかし、現状のVSCodeのGradle拡張機能では、これらの機能は提供されていない。
+([参照](https://docs.gradle.org/current/userguide/kotlin_dsl.html#sec:ide_support))
+もし、これらの機能が欲しい場合は、IntelliJ IDEAを使うことを検討するべきである。
+IntelliJ IDEAは、GradleのKotlin DSLをサポートし、高度なsemantic editor機能を提供している。
+学生であればJetBrainsの学生ライセンスを取得しUltimate版を無料で使うことができるので、そちらを
+使うことをお勧めする。
+
+![IDE Support](./images/ide_support.png)
