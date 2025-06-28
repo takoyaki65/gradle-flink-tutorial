@@ -5,3 +5,7 @@
 build
 
 bin/
+
+# Ignore Nix-related directory
+.direnv/
+
